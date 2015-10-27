@@ -1,13 +1,12 @@
 //
-//  QBImagePickerController.m
+//  QBImagePicker.m
 //  QBImagePicker
 //
-//  Created by Katsuma Tanaka on 2015/04/03.
-//  Copyright (c) 2015 Katsuma Tanaka. All rights reserved.
+//  Created by Tanaka Katsuma on 2013/12/30.
+//  Copyright (c) 2013年 Katsuma Tanaka. All rights reserved.
 //
 
 #import "QBImagePickerController.h"
-#import <Photos/Photos.h>
 
 // ViewControllers
 #import "QBAlbumsViewController.h"
@@ -16,31 +15,36 @@
 
 @property (nonatomic, strong) UINavigationController *albumsNavigationController;
 
-@property (nonatomic, strong) NSMutableOrderedSet *selectedAssets;
+@property (nonatomic, strong) ALAssetsLibrary *assetsLibrary;
+@property (nonatomic, strong, readwrite) NSMutableOrderedSet *selectedAssetURLs;
 @property (nonatomic, strong) NSBundle *assetBundle;
 
 @end
 
 @implementation QBImagePickerController
 
-- (instancetype)init
-{
++ (BOOL)isAccessible {
+    return ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary] &&
+            [UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeSavedPhotosAlbum]);
+}
+
+- (instancetype)init {
     self = [super init];
     
     if (self) {
         // Set default values
-        self.assetCollectionSubtypes = @[
-                                         @(PHAssetCollectionSubtypeSmartAlbumUserLibrary),
-                                         @(PHAssetCollectionSubtypeAlbumMyPhotoStream),
-                                         @(PHAssetCollectionSubtypeSmartAlbumPanoramas),
-                                         @(PHAssetCollectionSubtypeSmartAlbumVideos),
-                                         @(PHAssetCollectionSubtypeSmartAlbumBursts)
-                                         ];
+        self.groupTypes = @[
+                            @(ALAssetsGroupSavedPhotos),
+                            @(ALAssetsGroupPhotoStream),
+                            @(ALAssetsGroupAlbum)
+                            ];
+        self.filterType = QBImagePickerControllerFilterTypeNone;
         self.minimumNumberOfSelection = 1;
         self.numberOfColumnsInPortrait = 4;
         self.numberOfColumnsInLandscape = 7;
         
-        self.selectedAssets = [NSMutableOrderedSet orderedSet];
+        self.assetsLibrary = [[[SCAppDelegate dataManager] mediaManager] library];
+        self.selectedAssetURLs = [NSMutableOrderedSet orderedSet];
         
         // Get asset bundle
         self.assetBundle = [NSBundle bundleForClass:[self class]];
@@ -59,11 +63,10 @@
     return self;
 }
 
-- (void)setUpAlbumsViewController
-{
+- (void)setUpAlbumsViewController {
     // Add QBAlbumsViewController as a child
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"QBImagePicker" bundle:self.assetBundle];
-    UINavigationController *navigationController = [storyboard instantiateViewControllerWithIdentifier:@"QBAlbumsNavigationController"];
+    UINavigationController *navigationController = [storyboard instantiateViewControllerWithIdentifier:@"AlbumsNavigationController"];
     
     [self addChildViewController:navigationController];
     

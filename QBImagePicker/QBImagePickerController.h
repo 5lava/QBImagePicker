@@ -1,40 +1,42 @@
 //
-//  QBImagePickerController.h
+//  QBImagePicker.h
 //  QBImagePicker
 //
-//  Created by Katsuma Tanaka on 2015/04/03.
-//  Copyright (c) 2015 Katsuma Tanaka. All rights reserved.
+//  Created by Tanaka Katsuma on 2013/12/30.
+//  Copyright (c) 2013年 Katsuma Tanaka. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
-#import <Photos/Photos.h>
+#import <AssetsLibrary/AssetsLibrary.h>
+#import "SCViewController.h"
 
 @class QBImagePickerController;
 
 @protocol QBImagePickerControllerDelegate <NSObject>
 
 @optional
-- (void)qb_imagePickerController:(QBImagePickerController *)imagePickerController didFinishPickingAssets:(NSArray *)assets;
-- (void)qb_imagePickerControllerDidCancel:(QBImagePickerController *)imagePickerController;
+- (void)qb_imagePickerController:(QBImagePickerController *)imagePickerController didSelectAssets:(NSArray *)assets;
+- (void)qb_imagePickerController:(QBImagePickerController *)imagePickerController didCancelAssets:(NSArray *)assets;
 
-- (BOOL)qb_imagePickerController:(QBImagePickerController *)imagePickerController shouldSelectAsset:(PHAsset *)asset;
-- (void)qb_imagePickerController:(QBImagePickerController *)imagePickerController didSelectAsset:(PHAsset *)asset;
-- (void)qb_imagePickerController:(QBImagePickerController *)imagePickerController didDeselectAsset:(PHAsset *)asset;
+- (BOOL)qb_imagePickerController:(QBImagePickerController *)imagePickerController shouldSelectAsset:(ALAsset *)asset;
+- (void)qb_imagePickerController:(QBImagePickerController *)imagePickerController didSelectAsset:(ALAsset *)asset;
+- (void)qb_imagePickerController:(QBImagePickerController *)imagePickerController didDeselectAsset:(ALAsset *)asset;
+
 
 @end
 
-typedef NS_ENUM(NSUInteger, QBImagePickerMediaType) {
-    QBImagePickerMediaTypeAny = 0,
-    QBImagePickerMediaTypeImage,
-    QBImagePickerMediaTypeVideo
+typedef NS_ENUM(NSUInteger, QBImagePickerControllerFilterType) {
+    QBImagePickerControllerFilterTypeNone = 0,
+    QBImagePickerControllerFilterTypePhotos,
+    QBImagePickerControllerFilterTypeVideos
 };
 
-@interface QBImagePickerController : UIViewController
+@interface QBImagePickerController : SCViewController
 
 @property (nonatomic, weak) id<QBImagePickerControllerDelegate> delegate;
 
-@property (nonatomic, copy) NSArray *assetCollectionSubtypes;
-@property (nonatomic, assign) QBImagePickerMediaType mediaType;
+@property (nonatomic, copy) NSArray *groupTypes;
+@property (nonatomic, assign) QBImagePickerControllerFilterType filterType;
 
 @property (nonatomic, assign) BOOL allowsMultipleSelection;
 @property (nonatomic, assign) NSUInteger minimumNumberOfSelection;
@@ -45,5 +47,11 @@ typedef NS_ENUM(NSUInteger, QBImagePickerMediaType) {
 
 @property (nonatomic, assign) NSUInteger numberOfColumnsInPortrait;
 @property (nonatomic, assign) NSUInteger numberOfColumnsInLandscape;
+
+@property (nonatomic, strong, readonly) NSMutableOrderedSet *selectedAssetURLs;
+
+@property (nonatomic, assign) BOOL showsCancelButton __attribute__((deprecated));
+
++ (BOOL)isAccessible;
 
 @end
