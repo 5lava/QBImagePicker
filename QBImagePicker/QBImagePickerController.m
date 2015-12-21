@@ -43,7 +43,7 @@
         self.numberOfColumnsInPortrait = 4;
         self.numberOfColumnsInLandscape = 7;
         
-        self.assetsLibrary = [[[SCAppDelegate dataManager] mediaManager] library];
+		self.assetsLibrary = [[SCServices mediaManager] library];
         self.selectedAssetURLs = [NSMutableOrderedSet orderedSet];
         
         // Get asset bundle
