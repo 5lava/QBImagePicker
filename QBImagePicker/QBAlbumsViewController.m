@@ -54,7 +54,7 @@
     [super viewWillAppear:animated];
     
     // Configure navigation item
-    self.navigationItem.title = NSLocalizedStringFromTableInBundle(@"title", @"QBImagePicker", self.imagePickerController.assetBundle, nil);
+	self.navigationItem.title = @"Photos";
     self.navigationItem.prompt = self.imagePickerController.prompt;
     
     // Show/hide 'Done' button
@@ -150,9 +150,9 @@
         NSBundle *bundle = self.imagePickerController.assetBundle;
         NSString *format;
         if (selectedAssetURLs.count > 1) {
-            format = NSLocalizedStringFromTableInBundle(@"items_selected", @"QBImagePicker", bundle, nil);
+            format = @"%ld Items Selected";
         } else {
-            format = NSLocalizedStringFromTableInBundle(@"item_selected", @"QBImagePicker", bundle, nil);
+            format = @"%ld Item Selected";
         }
         
         NSString *title = [NSString stringWithFormat:format, selectedAssetURLs.count];

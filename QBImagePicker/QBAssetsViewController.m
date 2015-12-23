@@ -210,9 +210,9 @@
         NSBundle *bundle = self.imagePickerController.assetBundle;
         NSString *format;
         if (selectedAssetURLs.count > 1) {
-            format = NSLocalizedStringFromTableInBundle(@"items_selected", @"QBImagePicker", bundle, nil);
+            format = @"%ld Items Selected";
         } else {
-            format = NSLocalizedStringFromTableInBundle(@"item_selected", @"QBImagePicker", bundle, nil);
+            format = @"%ld Item Selected";
         }
         
         NSString *title = [NSString stringWithFormat:format, selectedAssetURLs.count];
@@ -382,14 +382,14 @@
                 NSString *format;
                 if (numberOfPhotos == 1) {
                     if (numberOfVideos == 1) {
-                        format = NSLocalizedStringFromTableInBundle(@"format_photo_and_video", @"QBImagePicker", bundle, nil);
+                        format = @"%ld Photo, %ld Video";
                     } else {
-                        format = NSLocalizedStringFromTableInBundle(@"format_photo_and_videos", @"QBImagePicker", bundle, nil);
+                        format = @"%ld Photo, %ld Videos";
                     }
                 } else if (numberOfVideos == 1) {
-                    format = NSLocalizedStringFromTableInBundle(@"format_photos_and_video", @"QBImagePicker", bundle, nil);
+                    format = @"%ld Photos, %ld Video";
                 } else {
-                    format = NSLocalizedStringFromTableInBundle(@"format_photos_and_videos", @"QBImagePicker", bundle, nil);
+                    format = @"%ld Photos, %ld Videos";
                 }
                 
                 label.text = [NSString stringWithFormat:format, numberOfPhotos, numberOfVideos];
@@ -398,8 +398,7 @@
                 
             case QBImagePickerControllerFilterTypePhotos:
             {
-                NSString *key = (numberOfPhotos == 1) ? @"format_photo" : @"format_photos";
-                NSString *format = NSLocalizedStringFromTableInBundle(key, @"QBImagePicker", bundle, nil);
+                NSString *format = (numberOfPhotos == 1) ? @"%ld Photo" : @"%ld Photos";
                 
                 label.text = [NSString stringWithFormat:format, numberOfPhotos];
             }
@@ -407,8 +406,7 @@
                 
             case QBImagePickerControllerFilterTypeVideos:
             {
-                NSString *key = (numberOfVideos == 1) ? @"format_video" : @"format_videos";
-                NSString *format = NSLocalizedStringFromTableInBundle(key, @"QBImagePicker", bundle, nil);
+				NSString *format = (numberOfVideos == 1) ? @"%ld Video" : @"%ld Videos";
                 
                 label.text = [NSString stringWithFormat:format, numberOfVideos];
             }
