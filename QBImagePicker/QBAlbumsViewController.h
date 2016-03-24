@@ -10,7 +10,7 @@
 
 @class QBImagePickerController;
 
-@interface QBAlbumsViewController : UITableViewController
+@interface QBAlbumsViewController : SCTableViewControllerObjC
 
 @property (nonatomic, weak) QBImagePickerController *imagePickerController;
 
