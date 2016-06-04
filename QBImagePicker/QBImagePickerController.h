@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import <AssetsLibrary/AssetsLibrary.h>
-#import "SCViewControllerObjC.h"
 
 @class QBImagePickerController;
 
@@ -31,7 +30,7 @@ typedef NS_ENUM(NSUInteger, QBImagePickerControllerFilterType) {
     QBImagePickerControllerFilterTypeVideos
 };
 
-@interface QBImagePickerController : SCViewControllerObjC
+@interface QBImagePickerController : UIViewController
 
 @property (nonatomic, weak) id<QBImagePickerControllerDelegate> delegate;
 

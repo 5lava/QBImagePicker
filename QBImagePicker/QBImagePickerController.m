@@ -78,4 +78,9 @@
     self.albumsNavigationController = navigationController;
 }
 
+-(void)viewDidLoad {
+	[[self navigationItem] setBackBarButtonItem:[[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil]];
+}
+
+
 @end

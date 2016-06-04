@@ -35,7 +35,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+
+	[[self navigationItem] setBackBarButtonItem:[[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil]];
+
+	
     [self setUpToolbarItems];
     
     [self updateAssetsGroupsWithCompletion:^{
