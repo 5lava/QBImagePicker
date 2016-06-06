@@ -10,6 +10,7 @@
 
 // ViewControllers
 #import "QBAlbumsViewController.h"
+#import "Socials-Swift.h"
 
 @interface QBImagePickerController ()
 
